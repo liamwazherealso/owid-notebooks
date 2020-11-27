@@ -1,0 +1,3 @@
+[submodule "owid-datasets"]
+	path = owid-datasets
+	url = git@github.com:owid/owid-datasets.git

@@ -3,6 +3,9 @@ owid-notebooks
 
 Jupyter for OWID data sets
 
+# Setup
+    Gather the submodule `make owid_data`.
+
 Project Organization
 ------------
 

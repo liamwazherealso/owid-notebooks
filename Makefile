@@ -29,6 +29,36 @@ requirements: test_environment
 data: requirements
 	$(PYTHON_INTERPRETER) src/data/make_dataset.py data/raw data/processed
 
+## Initialize external data
+owid_data:
+	git submodule init
+
+## Get current owid-datasets hash
+owid_data_hash:
+	{ \
+		cd owid-datasets/ ;\
+		git rev-parse HEAD ;\
+	}
+
+## Checkout owid-datasets hash
+owid_data_checkout:
+	{ \
+		cd owid-datasets/ ;\
+		git checkout $(hash) ;\
+	}
+
+## Bring owid-datasets back to last state
+owid_data_revert:
+	{ \
+		cd owid-datasets/ ;\
+		git submodule update --init --recursive ;\
+	}
+
+## Bring owid-datasets back to last state
+owid_data_update:
+	git stash 
+	git submodule update --remote --merge 
+
 ## Delete all compiled Python files
 clean:
 	find . -type f -name "*.py[co]" -delete

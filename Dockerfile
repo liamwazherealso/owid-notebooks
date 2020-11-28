@@ -6,8 +6,5 @@ RUN apt-get install -y wget && \
     apt-get install -y python3-pip && \
     apt-get install -y tmux && \
     apt-get install -y build-essential curl file git && \
-    pip3 install matplotlib && \
-    pip3 install pipenv && \
-    pip3 install sklearn && \
-    pip3 install jupyterlab && \
+    
 ADD * /home/

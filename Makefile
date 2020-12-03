@@ -32,6 +32,8 @@ data: requirements
 ## Initialize external data
 owid_data:
 	git submodule init
+	git submodule update --init --recursive 
+
 
 ## Get current owid-datasets hash
 owid_data_hash:
@@ -49,16 +51,15 @@ owid_data_checkout:
 
 ## Bring owid-datasets back to last state
 owid_data_revert:
-	{ \
-		cd owid-datasets/ ;\
-		git submodule update --init --recursive ;\
-	}
+	git submodule update --init --recursive  ;\
 
-## Bring owid-datasets back to last state
+## Update owid-datasets
 owid_data_update:
-	git stash 
-	git submodule update --remote --merge 
-
+	{ \
+                cd owid-datasets/ ;\
+                git fetch ;\
+                git pull origin master ;\
+        }
 ## Delete all compiled Python files
 clean:
 	find . -type f -name "*.py[co]" -delete

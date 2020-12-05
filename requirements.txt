@@ -12,3 +12,6 @@ seaborn
 matplotlib
 pandas
 sklearn
+jupyter lab
+plotly
+

@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import click
 import logging
 from pathlib import Path
 from dotenv import find_dotenv, load_dotenv
@@ -8,19 +7,23 @@ from os import path
 import os
 import pandas as pd
 import numpy as np
+import pycountry
 
 
-@click.command()
-@click.argument('input_filepath', type=click.Path(exists=True))
-@click.argument('output_filepath', type=click.Path())
 
-DATASETS = "../owid-datasets/datasets/*"
+DATASETS = "../../owid-datasets/datasets/"
 
-def load_data(ds):
-    return pd.read_csv(os.path.join("../owid-datasets/datasets/", ds, ds + ".csv"))
-    main()
-# consolidate code: dtype hierarchy. 
 
+
+def get_iso3code(countries):
+    """"""
+    codes=[]
+    for country in countries:
+        try:
+            codes.append(pycountry.countries.get(name=country).alpha_3)
+        except:
+            codes.append('')
+    return codes
 
 # create empty df to insert the dtypes for each
 from itertools import chain 
@@ -28,12 +31,17 @@ from itertools import chain
 
 def get_ds_dict():
     ds_dict = {}
-    for ds in glob(DATASETS):
+    for ds in glob(DATASETS+'*'):
         ds = os.path.basename(ds)
         df = load_data(ds)
         ds_dict[ds] = df.dtypes
     return ds_dict
 
+
+
+def load_data(ds):
+    return pd.read_csv(os.path.join(DATASETS, ds, ds + ".csv"))
+# consolidate code: dtype hierarchy. 
         
 def get_df_cols(ds_dict):
     y_dim =  set((chain(*[dtypes.index for dtypes in ds_dict.values()])))

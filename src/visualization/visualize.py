@@ -1,7 +1,7 @@
 import seaborn as sns
 import plotly.express as px
 
-def px_barplot(df,x,y,title=None,color=None,animation_frame=None, image_path=None):
+def get_barplot(df,x,y,title=None,color=None,animation_frame=None, image_path=None):
     """
     Args: df
           x
@@ -20,7 +20,7 @@ def px_barplot(df,x,y,title=None,color=None,animation_frame=None, image_path=Non
     fig.show()
 
     
-def px_lineplot(df,x,y,title=None,color=None, animation_frame=None,image_path=None):
+def get_lineplot(df,x,y,title=None,color=None, animation_frame=None,image_path=None):
     """
     Args: df
           x
@@ -38,7 +38,7 @@ def px_lineplot(df,x,y,title=None,color=None, animation_frame=None,image_path=No
         fig.write_image(image_path)
     fig.show()
 
-def px_scatterplot(df,x,y,animation_frame=None,title=None,color=None, image_path=None):
+def get_scatterplot(df,x,y,animation_frame=None,title=None,color=None, image_path=None):
     """
     Args: df
           x
@@ -56,7 +56,7 @@ def px_scatterplot(df,x,y,animation_frame=None,title=None,color=None, image_path
         fig.write_image(image_path)
     fig.show()
 
-def px_geoplot(df,locations,color,animation_frame=None,sliders=None,image_path=None):
+def get_geoplot(df,locations,color,animation_frame=None,sliders=None,image_path=None):
     """
     Args: df
           x
@@ -76,7 +76,7 @@ def px_geoplot(df,locations,color,animation_frame=None,sliders=None,image_path=N
     if image_path:
         fig.write_image(image_path)
     fig.show()
-def px_piechart(df,names,values,title=None):
+def get_piechart(df,names,values,title=None):
     """
     Args: df
           x

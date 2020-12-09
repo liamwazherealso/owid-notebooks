@@ -9,13 +9,78 @@ import pandas as pd
 import numpy as np
 import pycountry
 from itertools import chain 
+import json
 
 
 
 DATASETS = os.path.abspath("../../owid-notebooks/owid-datasets/datasets/")
 
 
+def get_datapackages_json(dataset):
+    """
+    returns a dictionary given a path to a .json file
+    
+    Args: datasets :path do individual datasets
+    ----
+    """
+    
+    with open("{}/datapackage.json".format(os.path.abspath(dataset)), "r") as read_file:
+        data = json.load(read_file)
+    return data
 
+
+def parse_dict(string, data, strings=None):
+    """
+    returns a concatenated string containing the substring within a dictionary, strings are separated by commas
+    *********Work in progress**************
+    
+    """
+    if not string:
+        strings=''
+    if isinstance(data,dict):
+        for key,value in data.items():
+            parse_dict(string, value, strings)   
+    elif isinstance(data,str):
+        if string in datat:
+            strings+=data
+    elif isinstance(data,set):
+        for ind in data:
+            parse_dict(string, data, strings)
+
+    elif isinstance(data,list):
+        for ind in data:
+            parse_dict(string, data, strings)
+    else:
+        pass
+    return strings
+
+
+    
+        
+                
+    
+def generate_datapackage_csv(datasets):
+    """
+    returns a dataframe containing the links to source data for each data.package.json
+    
+    Args: datasets :path do individual datasets
+    ----
+    """
+    headers=['id','title','source_links']
+    body=[]
+    for dataset in glob(datasets+'/*'):
+        data=get_datapackages_json(dataset)
+        http_list=None
+        try:
+            http_list=data['sources'][0].get('link')
+        except:
+            pass
+        dataset_id=data['id'] 
+        dataset_title =data['title'] 
+        body.append([dataset_id,dataset_title,http_list])
+    df=pd.DataFrame(columns=headers,data=body)
+    return df
+    
 def get_iso3code(countries):
     """
     returns a list of ISO 3166 country codes from a given list of countries
@@ -38,11 +103,10 @@ def get_iso3code(countries):
 
 def get_ds_dict(datasets):
     """
-    
-    
+    returns a dictionary of dtypes in each csv given a directory of subdirectories containing csvs
     """
     ds_dict = {}
-    for ds in glob(datasets+'*'):
+    for ds in glob(datasets+'/*'):
         ds = os.path.basename(ds)
         df = load_data(ds)
         ds_dict[ds] = df.dtypes
@@ -51,10 +115,11 @@ def get_ds_dict(datasets):
 
 
 def load_data(ds):
-    """returns dataframe of the given object"""
-    return pd.read_csv(os.path.join(DATASETS, ds, ds + ".csv"))
+    """returns dataframe diven a dataset directory """
+    return pd.read_csv(os.path.join(DATASETS,ds,ds + ".csv"))
         
 def get_df_cols(ds_dict):
+    
     y_dim =  set((chain(*[dtypes.index for dtypes in ds_dict.values()])))
     x_dim = ds_dict.keys()
     df_cols = pd.DataFrame(index=x_dim, columns=y_dim)

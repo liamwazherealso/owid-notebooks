@@ -31,7 +31,7 @@ def get_datapackages_json(dataset):
 
 def parse_dict(string, data, strings=None):
     """
-    returns a concatenated string containing the substring within a dictionary, strings are separated by commas
+    brute force attempt at checking each value in a JSON file that contains a substring
     *********Work in progress**************
     
     """
@@ -41,7 +41,7 @@ def parse_dict(string, data, strings=None):
         for key,value in data.items():
             parse_dict(string, value, strings)   
     elif isinstance(data,str):
-        if string in datat:
+        if string in data:
             strings+=data
     elif isinstance(data,set):
         for ind in data:
@@ -66,7 +66,7 @@ def generate_datapackage_csv(datasets):
     Args: datasets :path do individual datasets
     ----
     """
-    headers=['id','title','source_links']
+    headers=['id','publisher','title','source_links']
     body=[]
     for dataset in glob(datasets+'/*'):
         data=get_datapackages_json(dataset)
@@ -75,12 +75,19 @@ def generate_datapackage_csv(datasets):
             http_list=data['sources'][0].get('link')
         except:
             pass
+        try:
+            dataset_publisher=data['sources'][0].get('dataPublisherSource')
+        except:
+            pass
+ 
         dataset_id=data['id'] 
         dataset_title =data['title'] 
-        body.append([dataset_id,dataset_title,http_list])
+        
+        body.append([dataset_id,dataset_publisher,dataset_title,http_list])
     df=pd.DataFrame(columns=headers,data=body)
     return df
-    
+
+
 def get_iso3code(countries):
     """
     returns a list of ISO 3166 country codes from a given list of countries

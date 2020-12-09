@@ -17,7 +17,7 @@ def get_barplot(df,x,y,title=None,color=None,animation_frame=None, image_path=No
     Returns: returns barplot chart,
     
     """
-    fig = px.bar(df, x=y, y=y,color=color,title=title)
+    fig = px.bar(df, x=x, y=y,color=color,title=title)
     if image_path:
         fig.write_image(image_path)
     fig.show()

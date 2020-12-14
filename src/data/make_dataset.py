@@ -31,7 +31,7 @@ def get_datapackages_json(dataset):
 
 def parse_dict(string, data, strings=None):
     """
-    brute force attempt at checking each value in a JSON file that contains a substring
+    brute force attempt at checking each string value in a JSON file that contains a substring
     *********Work in progress**************
     
     """
@@ -184,7 +184,48 @@ def main(input_filepath, output_filepath):
     logger = logging.getLogger(__name__)
     logger.info('making final data set from raw data')
 
+country_names=['Angola', 'Antigua and Barbuda', 'Argentina', 'Armenia',
+       'Australia', 'Austria', 'Azerbaijan', 'Bahamas', 'Bahrain',
+       'Bangladesh', 'Barbados', 'Belarus', 'Belgium', 'Belize', 'Benin',
+       'Bermuda', 'Bhutan', 'Bolivia', 'Bosnia and Herzegovina',
+       'Botswana', 'Brazil', 'Brunei', 'Bulgaria', 'Burkina Faso',
+       'Burundi', 'Cabo Verde', 'Cambodia', 'Cameroon', 'Canada',
+       'Central African Republic', 'Chad', 'Chile', 'China', 'Colombia',
+       'Comoros', 'Congo', 'Cook Islands', 'Costa Rica', "Cote d'Ivoire",
+       'Croatia', 'Cuba', 'Cyprus', 'Czech Republic',
+       'Democratic Republic of Congo', 'Denmark', 'Djibouti', 'Dominica',
+       'Dominican Republic', 'Ecuador', 'Egypt', 'El Salvador',
+       'Equatorial Guinea', 'Eritrea', 'Estonia', 'Ethiopia', 'Fiji',
+       'Finland', 'France', 'French Polynesia', 'Gabon', 'Gambia',
+       'Georgia', 'Germany', 'Ghana', 'Greece', 'Greenland', 'Grenada',
+       'Guatemala', 'Guinea', 'Guinea-Bissau', 'Guyana', 'Haiti',
+       'Honduras', 'Hong Kong', 'Hungary', 'Iceland', 'India',
+       'Indonesia', 'Iran', 'Iraq', 'Ireland', 'Israel', 'Italy',
+       'Jamaica', 'Japan', 'Jordan', 'Kazakhstan', 'Kenya', 'Kiribati',
+       'Kuwait', 'Kyrgyzstan', 'Laos', 'Latvia', 'Lebanon', 'Lesotho',
+       'Liberia', 'Libya', 'Lithuania', 'Luxembourg', 'Macedonia',
+       'Madagascar', 'Malawi', 'Malaysia', 'Maldives', 'Mali', 'Malta',
+       'Marshall Islands', 'Mauritania', 'Mauritius', 'Mexico',
+       'Micronesia (country)', 'Moldova', 'Mongolia', 'Montenegro',
+       'Morocco', 'Mozambique', 'Myanmar', 'Namibia', 'Nauru', 'Nepal',
+       'Netherlands', 'New Zealand', 'Nicaragua', 'Niger', 'Nigeria',
+       'Niue', 'North Korea', 'Norway', 'Oman', 'Pakistan', 'Palau',
+       'Palestine', 'Panama', 'Papua New Guinea', 'Paraguay', 'Peru',
+       'Philippines', 'Poland', 'Portugal', 'Puerto Rico', 'Qatar',
+       'Romania', 'Russia', 'Rwanda', 'Saint Kitts and Nevis',
+       'Saint Lucia', 'Saint Vincent and the Grenadines', 'Samoa',
+       'Sao Tome and Principe', 'Saudi Arabia', 'Senegal', 'Serbia',
+       'Seychelles', 'Sierra Leone', 'Singapore', 'Slovakia', 'Slovenia',
+       'Solomon Islands', 'Somalia', 'South Africa', 'South Korea',
+       'Spain', 'Sri Lanka', 'Sudan', 'Suriname', 'Swaziland', 'Sweden',
+       'Switzerland', 'Syria', 'Taiwan', 'Tajikistan', 'Tanzania',
+       'Thailand', 'Timor-Leste', 'Togo', 'Tokelau', 'Tonga',
+       'Trinidad and Tobago', 'Tunisia', 'Turkey', 'Turkmenistan',
+       'United Kingdom', 'United States', 'Uruguay', 'Uzbekistan',
+       'Vanuatu', 'Venezuela', 'Vietnam', 'Yemen', 'Zambia',
+       'Zimbabwe']
 
+       
 if __name__ == '__main__':
     log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
     logging.basicConfig(level=logging.INFO, format=log_fmt)
@@ -195,3 +236,4 @@ if __name__ == '__main__':
     # find .env automagically by walking up directories until it's found, then
     # load up the .env entries as environment variables
     load_dotenv(find_dotenv())
+    
